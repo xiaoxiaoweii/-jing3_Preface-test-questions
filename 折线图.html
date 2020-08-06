@@ -32,15 +32,115 @@
       this.arrowSize = 10;
       /* 绘制点 */
       this.dottedSize = 6;
-
-
     }
     /* 行为方法 */
-    LineChart.prototype.init = function (data) {}
-    LineChart.prototype.drawGrid = function () {}
-    LineChart.prototype.drawAxis = function () {}
-    LineChart.prototype.drawDotted = function () {}
-    /* 初始化 */
+    LineChart.prototype.init = function () {
+      this.drawGrid()
+      this.drawAxis()
+      this.drawDotted(data)
+    }
+    LineChart.prototype.drawGrid = function () {
+      let xLineTotal
+      let yLineTotal
+      xLineTotal = Math.floor(this.canvasHeight / this.gridSize)
+      yLineTotal = Math.floor(this.canvasWidth / this.gridSize)
+      /* x轴 */
+      for (var i = 0; i <= xLineTotal; i++) {
+        height = i * this.gridSize - 0.5
+        this.ctx.beginPath()
+        this.ctx.moveTo(0, height)
+        this.ctx.lineTo(this.canvasWidth, height)
+        this.ctx.strokeStyle = '#eee'
+        this.ctx.stroke();
+      }
+      /* y轴 */
+      for (var i = 0; i <= yLineTotal; i++) {
+        let width
+        width = i * this.gridSize - 0.5
+        this.ctx.beginPath()
+        this.ctx.moveTo(width, 0)
+        this.ctx.lineTo(width, this.canvasHeight)
+        this.ctx.strokeStyle = '#eee'
+        this.ctx.stroke();
+      }
+    }
+    LineChart.prototype.drawAxis = function () {
+      const x0 = this.space
+      const y0 = this.canvasHeight - this.space
+      const xe = this.canvasWidth - this.space
+      const ye = this.space
+      /* x轴 */
+      this.ctx.beginPath();
+      this.ctx.moveTo(x0, y0)
+      this.ctx.lineTo(xe, y0)
+      /* x箭头 */
+      this.ctx.lineTo(xe - this.arrowSize, y0 + this.arrowSize / 2)
+      this.ctx.lineTo(xe - this.arrowSize, y0 - this.arrowSize / 2)
+      this.ctx.lineTo(this.canvasWidth - this.space, y0)
+      this.ctx.strokeStyle = '#000000'
+      this.ctx.fill()
+      this.ctx.stroke()
+      /* y轴 */
+      this.ctx.beginPath();
+      this.ctx.moveTo(x0, y0)
+      this.ctx.lineTo(x0, ye)
+      /* y箭头 */
+      this.ctx.lineTo(this.space - this.arrowSize / 2, ye + this.arrowSize)
+      this.ctx.lineTo(this.space + this.arrowSize / 2, ye + this.arrowSize)
+      this.ctx.lineTo(x0, this.space)
+      this.ctx.strokeStyle = '#000000'
+      this.ctx.fill()
+      this.ctx.stroke()
+    }
+    LineChart.prototype.drawDotted = function (data) {
+      var that = this
+      /* 记录当前坐标 */
+      let preCanvasX = 0
+      let preCanvasY = 0
+      data.forEach(function (i, index) {
+        const x0 = that.space
+        const y0 = that.canvasHeight - that.space
+        const canvasX = x0 + i.x
+        const canvasY = y0 - i.y
+        const size = that.dottedSize
+        /* 绘制点 */
+        /* 左上 */
+        let x1y1
+        /* 右上 */
+        let x2y2
+        /* 右下 */
+        let x3y3
+        /* 左下 */
+        let x4y4
+        x1y1 = [canvasX - size / 2, canvasY - size / 2]
+        x2y2 = [canvasX + size / 2, canvasY - size / 2]
+        x3y3 = [canvasX + size / 2, canvasY + size / 2]
+        x4y4 = [canvasX - size / 2, canvasY + size / 2]
+        that.ctx.moveTo(x1y1[0], x1y1[1])
+        that.ctx.lineTo(x2y2[0], x2y2[1])
+        that.ctx.lineTo(x3y3[0], x3y3[1])
+        that.ctx.lineTo(x4y4[0], x4y4[1])
+        that.ctx.closePath();
+        that.ctx.fill()
+        /* 连线 */
+        if (index == 0) {
+          that.ctx.beginPath()
+          that.ctx.moveTo(x0, y0)
+          that.ctx.lineTo(canvasX, canvasY)
+          that.ctx.stroke()
+          that.ctx.stroke()
+        } else {
+          that.ctx.beginPath()
+          that.ctx.moveTo(preCanvasX, preCanvasY)
+          that.ctx.lineTo(canvasX, canvasY)
+          that.ctx.stroke()
+        }
+        /* 记录上一次的点坐标 */
+        preCanvasX = canvasX
+        preCanvasY = canvasY
+      })
+    }
+    // /* 初始化 */
     var data = [{
         x: 100,
         y: 100
