@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="600" height="400"></canvas>
+  <script>
+    var myCanvas = document.querySelector('canvas');
+    var ctx = myCanvas.getContext('2d')
+    let coordinate
+    let dottedSize
+    /* 左上 */
+    let x1y1
+    /* 右上 */
+    let x2y2
+    /* 右下 */
+    let x3y3
+    /* 左下 */
+    let x4y4
+    coordinate = {
+      x: 100,
+      y: 100
+    }
+    dottedSize = 6;
+    x1y1 = [coordinate.x - dottedSize / 2, coordinate.y - dottedSize / 2]
+    x2y2 = [coordinate.x + dottedSize / 2, coordinate.y - dottedSize / 2]
+    x3y3 = [coordinate.x + dottedSize / 2, coordinate.y + dottedSize / 2]
+    x4y4 = [coordinate.x - dottedSize / 2, coordinate.y + dottedSize / 2]
+    ctx.moveTo(x1y1[0], x1y1[1])
+    ctx.lineTo(x2y2[0], x2y2[1])
+    ctx.lineTo(x3y3[0], x3y3[1])
+    ctx.lineTo(x4y4[0], x4y4[1])
+    ctx.closePath();
+    ctx.fill()
+  </script>
+</body>
+
+</html>
