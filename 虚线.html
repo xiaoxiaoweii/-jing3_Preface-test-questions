@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="600" height="400"></canvas>
+  <script>
+    /* 获取元素 */
+    var myCanvas = document.querySelector('canvas');
+    /* 绘制工具箱 */
+    var ctx = myCanvas.getContext('2d')
+    /* 绘制  默认宽度 1px 颜色 黑色 */
+    ctx.moveTo(100,100.5);
+    ctx.lineTo(300,100.5);
+    ctx.setLineDash([5,10,15]); // [实 虚 实 虚] 描述排列方式
+    console.log(ctx.getLineDash()) /* 获取不重复的那一段排列方式 */
+    ctx.lineDashOffset = 20; // 正值 后偏移 负 前偏移
+    ctx.stroke();
+  </script>
+</body>
+
+</html>
