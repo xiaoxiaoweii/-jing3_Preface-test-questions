@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="600" height="400"></canvas>
+  <script>
+    /* 弧度----> 弧长正好等于圆的半径时，两条射线的夹角的弧度为1 */
+    /* 一角度等于Π/180弧度 */
+    /* 获取元素 */
+    var myCanvas = document.querySelector('canvas');
+    /* 绘制工具箱 */
+    var ctx = myCanvas.getContext('2d')
+    /* 体验曲线的绘制 */
+    /* 线是由点构成的  曲线可以由数学公式得来 */
+    /* 公式 y = 2x */
+    /* for (var i = 1; i < 600; i++) {
+      var x = i;
+      var y = 2 * x;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke() */
+    /* y = x^2 + 4x + 40 */
+    /* for (var i = 1; i < 600; i++) {
+      var x = i;
+      var y = Math.pow(x / 3 - 50,2) + 4 * x - 500
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke() */
+    /* y = sin(x) */
+    for (var i = 1; i < 600; i++) {
+      var x = i;
+      var y = 10 * Math.sin(x / 10) + 100
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke()
+  </script>
+</body>
+
+</html>
