@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="600" height="400"></canvas>
+  <script>
+    var myCanvas = document.querySelector('canvas');
+    var ctx = myCanvas.getContext('2d')
+    /* 绘制圆弧 */
+    /* 确定圆心 坐标 x,y */
+    /* 圆半径 r */
+    /* 起始绘制的位置和结束绘制的位置 确定圆弧的长度和位置  startAngle endAngle 弧度 */
+    /* 绘制的方向  direction  默认值顺时针false 逆时针 true */
+    /* 中心位置画半径为150px的圆弧 右下角 */
+    const w = ctx.canvas.width
+    const h = ctx.canvas.height
+    ctx.arc(w / 2, h / 2, 150, Math.PI/2, Math.PI, true);
+    ctx.stroke()
+  </script>
+</body>
+
+</html>
