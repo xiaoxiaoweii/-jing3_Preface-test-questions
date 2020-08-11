@@ -24,14 +24,37 @@
     /* 绘制标题 */
     /* 在画布的左上角 绘制说明 */
 
-    const PieChart = function () {
-      const ctx = ctx || document.querySelector('canvas').getContext('2d');
+    const PieChart = function (ctx) {
+      this.ctx = ctx || document.querySelector('canvas').getContext('2d');
+      /* 绘制饼状图中心 */
+      this.w = this.ctx.canvas.width;
+      this.h = this.ctx.canvas.height;
+      /* 圆心 */
+      this.x0 = this.w / 2 + 60
+      this.y0 = this.h / 2
+      /* 半径 */
+      this.radius = 150
     }
-    PieChart.prototype.init = function () {
-
+    PieChart.prototype.init = function (data) {
+      /* 数据 */
+      this.drawPie(data);
     }
-    PieChart.prototype.drawPie = function () {
-
+    PieChart.prototype.drawPie = function (data) {
+      const self = this
+      /* 转化弧度 */
+      const angleList = this.transformAngle(data)
+      console.log(angleList)
+      var startAngle = 0;
+      angleList.forEach((item, index) => {
+        /* 当前的结束弧度为下一次起始弧度 */
+        let endAngle = startAngle + item.angle
+        ctx.beginPath();
+        ctx.moveTo(self.x0, self.y0);
+        ctx.arc(self.x0, self.y0, self.radius, startAngle, endAngle)
+        ctx.fillStyle = self.getRandomColor()
+        ctx.fill();
+        startAngle = endAngle
+      })
     }
     PieChart.prototype.drawTitle = function () {
 
@@ -39,6 +62,45 @@
     PieChart.prototype.drawDesc = function () {
 
     }
+    PieChart.prototype.transformAngle = function (data) {
+      /* 返回的数据包含弧度 */
+      let total = 0;
+      data.forEach((item, index) => {
+        total += item.num
+      });
+      /* 计算弧度 并且追加到当前对象内容 */
+      data.forEach((item, index) => {
+        const angle = item.num / total * Math.PI * 2;
+        item.angle = angle;
+      })
+      return data
+    }
+
+    PieChart.prototype.getRandomColor = function (data) {
+      const r = Math.floor(Math.random() * 256)
+      const g = Math.floor(Math.random() * 256)
+      const b = Math.floor(Math.random() * 256)
+      return `rgb(${r},${g},${b})`
+    }
+    const data = [{
+        title: '15-20岁',
+        num: 10
+      },
+      {
+        title: '20-25岁',
+        num: 30
+      },
+      {
+        title: '25-30岁',
+        num: 40
+      },
+      {
+        title: '30岁以上',
+        num: 4
+      }
+    ]
+    let pieChart = new PieChart();
+    pieChart.init(data)
   </script>
 </body>
 
