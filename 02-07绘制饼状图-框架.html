@@ -23,7 +23,6 @@
     /* 根据数据绘制饼图 */
     /* 绘制标题 */
     /* 在画布的左上角 绘制说明 */
-
     const PieChart = function (ctx) {
       this.ctx = ctx || document.querySelector('canvas').getContext('2d');
       /* 绘制饼状图中心 */
@@ -34,6 +33,8 @@
       this.y0 = this.h / 2
       /* 半径 */
       this.radius = 150
+      /* 伸出去的线的长度 */
+      this.outLine = 20
     }
     PieChart.prototype.init = function (data) {
       /* 数据 */
@@ -43,7 +44,6 @@
       const self = this
       /* 转化弧度 */
       const angleList = this.transformAngle(data)
-      console.log(angleList)
       var startAngle = 0;
       angleList.forEach((item, index) => {
         /* 当前的结束弧度为下一次起始弧度 */
@@ -51,13 +51,40 @@
         ctx.beginPath();
         ctx.moveTo(self.x0, self.y0);
         ctx.arc(self.x0, self.y0, self.radius, startAngle, endAngle)
-        ctx.fillStyle = self.getRandomColor()
+        const color = ctx.fillStyle = self.getRandomColor()
         ctx.fill();
+        /* 绘制标题 */
+        self.drawTitle(startAngle, item.angle, color, item.title)
         startAngle = endAngle
       })
     }
-    PieChart.prototype.drawTitle = function () {
-
+    /* 绘制标题 */
+    PieChart.prototype.drawTitle = function (startAngle, angle, color, title) {
+      /* 斜边 */
+      const edge = this.radius + this.outLine
+      /* x直角边 */
+      const edgeX = Math.cos(startAngle + angle / 2) * edge
+      const edgeY = Math.sin(startAngle + angle / 2) * edge
+      /* 计算点坐标 */
+      const outX = this.x0 + edgeX
+      const outY = this.y0 + edgeY
+      /* 画线 */
+      this.ctx.beginPath()
+      this.ctx.moveTo(this.x0, this.y0)
+      this.ctx.lineTo(outX, outY)
+      this.ctx.strokeStyle = color
+      /* 画文字和下划线 */
+      /* 线的方向判断 伸出去的点在x0左边 线的方向在左边 在x0右边 线的方向在右边 */
+      /* 结束的点坐标 和文字大小有关系 */
+      this.ctx.font = '12px Microsoft YaHei'
+      const textWidth = this.ctx.measureText(title).width
+      const X = outX > this.x0 ? outX + textWidth : outX - textWidth
+      const align = outX > this.x0 ? 'left': 'right'
+      this.ctx.textAlign = align
+      this.ctx.lineTo(X, outY)
+      this.ctx.stroke()
+      this.ctx.textBaseline = 'bottom'
+      this.ctx.fillText(title,outX,outY)
     }
     PieChart.prototype.drawDesc = function () {
 
