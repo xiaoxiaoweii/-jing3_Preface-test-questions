@@ -35,6 +35,10 @@
       this.radius = 150
       /* 伸出去的线的长度 */
       this.outLine = 20
+      /* 说明矩形的大小 */
+      this.rectW = 30;
+      this.rectH = 16;
+      this.space = 15;
     }
     PieChart.prototype.init = function (data) {
       /* 数据 */
@@ -55,6 +59,8 @@
         ctx.fill();
         /* 绘制标题 */
         self.drawTitle(startAngle, item.angle, color, item.title)
+        /* 绘制说明 */
+        self.drawDesc(index, item.title)
         startAngle = endAngle
       })
     }
@@ -79,15 +85,25 @@
       this.ctx.font = '12px Microsoft YaHei'
       const textWidth = this.ctx.measureText(title).width
       const X = outX > this.x0 ? outX + textWidth : outX - textWidth
-      const align = outX > this.x0 ? 'left': 'right'
+      const align = outX > this.x0 ? 'left' : 'right'
       this.ctx.textAlign = align
       this.ctx.lineTo(X, outY)
       this.ctx.stroke()
       this.ctx.textBaseline = 'bottom'
-      this.ctx.fillText(title,outX,outY)
+      this.ctx.fillText(title, outX, outY)
     }
-    PieChart.prototype.drawDesc = function () {
-
+    PieChart.prototype.drawDesc = function (index, title) {
+      /* 绘制说明 */
+      /* 矩形的大小 */
+      /* 距离上边和左边的间距 */
+      /* 矩形之间的间距 */
+      this.ctx.fillRect(this.space, this.space + index * (this.rectH + 10), this.rectW, this.rectH)
+      /* 绘制文字 */
+      this.ctx.beginPath();
+      this.ctx.textAlign = 'left'
+      this.ctx.textBaseline = 'top'
+      console.log(this.space + this.rectW + 10, this.space + index * (this.rectH + 10))
+      this.ctx.fillText(title, this.space + this.rectW + 10, this.space + index * (this.rectH + 10))
     }
     PieChart.prototype.transformAngle = function (data) {
       /* 返回的数据包含弧度 */
