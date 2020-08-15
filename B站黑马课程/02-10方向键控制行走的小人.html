@@ -51,28 +51,29 @@
         that.x0 = that.canvasWidth / 2 - that.personWidth / 2
         that.y0 = that.canvasHeight / 2 - that.personHeight / 2
         /* 默认绘制在中心位置 正面朝外 */
-        that.ctx.drawImage(image,0,0,that.personWidth,that.personHeight,that.x0,that.y0,that.personWidth,that.personHeight)
+        that.ctx.drawImage(image, 0, 0, that.personWidth, that.personHeight, that.x0, that.y0, that.personWidth,
+          that.personHeight)
         /* 通过方向键控制人物行走 */
         that.index = 0
         document.onkeydown = function (e) {
           if (e.keyCode === 40) {
             that.direction = 0;
-            that.stepY ++
+            that.stepY++
             that.drawImage(image)
             /* 上 */
           } else if (e.keyCode === 37) {
             that.direction = 1
-            that.stepX --
+            that.stepX--
             that.drawImage(image)
             /* 左 */
           } else if (e.keyCode === 39) {
             that.direction = 2
-            that.stepX ++
+            that.stepX++
             that.drawImage(image)
             /* 右 */
           } else if (e.keyCode === 38) {
             that.direction = 3
-            that.stepY --
+            that.stepY--
             that.drawImage(image)
             /* 下 */
           }
@@ -92,7 +93,7 @@
     }
     /* 绘制图片 */
     Person.prototype.drawImage = function (image) {
-      this.index ++
+      this.index++
       /* 清除画布 */
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
       /* 绘图 */

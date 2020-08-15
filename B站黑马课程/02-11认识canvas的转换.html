@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 100px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <img src="images/01.jpg"> -->
+  <canvas width="600" height="400"></canvas>
+  <script>
+    const myCanvas = document.querySelector('canvas');
+    const ctx = myCanvas.getContext('2d')
+    /* ctx.strokeRect(100, 100, 200, 200)
+    ctx.translate(100, 100) */
+    /* 缩放的是坐标轴 */
+    /* ctx.scale(0.5,1) */
+    ctx.rotate(Math.PI/6)
+    var startAngle = 0
+    ctx.translate(200, 150)
+    setInterval(function () {
+      startAngle += Math.PI / 180
+      ctx.rotate(startAngle)
+      ctx.strokeRect(-50, -50, 100, 100)
+    }, 200)
+  </script>
+</body>
+
+</html>
