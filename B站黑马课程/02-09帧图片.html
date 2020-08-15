@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 100px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <img src="images/01.jpg"> -->
+  <canvas width="600" height="400"></canvas>
+  <script>
+    const myCanvas = document.querySelector('canvas');
+    const ctx = myCanvas.getContext('2d')
+    var image = new Image();
+    image.onload = function () {
+      /* 动态获取图片尺寸 */
+      var imageWidth = image.width;
+      var imageHeight = image.height;
+      console.log(imageWidth)
+      /* 计算出每一个小人物尺寸 */
+      var personWidth = imageWidth / 8
+      var personHeight = imageHeight / 3
+      /* 位截取图片 */
+      /* 帧动画 一定时间间隔更换显示的图片 根据图片的索引 */
+      var index = 0
+      /* 绘制在画布中间 */
+      var x0 = ctx.canvas.width / 2 - personWidth / 2
+      var y0 = ctx.canvas.height / 2 - personHeight / 2
+      setInterval(function () {
+        index++;
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        ctx.drawImage(image, index * personWidth, index * personHeight, personWidth, personHeight, x0, y0,
+          personWidth, personHeight)
+        if (index >= 2) {
+          index = 0
+        }
+      }, 200)
+
+    }
+    image.src = 'images/02.jpeg'
+  </script>
+</body>
+
+</html>

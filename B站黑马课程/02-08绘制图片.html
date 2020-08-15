@@ -27,12 +27,17 @@
     img.src = 'images/01.jpg'  */
     /* 方法2 创建img对象 */
     var img = new Image();
-    img.onload = function() {
+    img.onload = function () {
       /* 实现图片绘制 */
+      /* 三个参数 图片对象 绘制在画布上的坐标 */
+      /* ctx.drawImage(img, 0, 100) */
+      /* 五个参数 图片对象 坐标 图片大小  */
+      /* ctx.drawImage(img,100,100,100,100) */
+      /* 九个参数 图片对象 坐标  截取图片的位置 大小 放置的位置 大小*/
+      ctx.drawImage(img,100,100,100,100,100,100,100,100)
     }
-    img.src = 'images/01.jpg'
-    /* 必须等图片加载完毕 */
-    
+    img.src = 'images/02.jpeg'
+
     console.log(img)
   </script>
 </body>
