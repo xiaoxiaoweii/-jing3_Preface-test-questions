@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 100px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="600" height="400"></canvas>
+  <script>
+    var Person = function (ctx) {
+      /* 绘制工具 */
+      this.ctx = ctx || document.querySelector('canvas').getContext('2d')
+      /* 图片路径 */
+      this.src = 'images/02.jpeg'
+      /* 画布的大小 */
+      this.canvasWidth = this.ctx.canvas.width;
+      this.canvasHeight = this.ctx.canvas.height;
+      /* 初始化方法 */
+      this.init()
+
+    }
+    Person.prototype.init = function () {
+      var that = this
+      /* 加载图片 */
+      this.loadImage(function (image) {
+        /* 图片的大小 */
+        that.imageWidth = image.width;
+        that.imageHeight = image.height;
+        /* 人物的大小 */
+        that.personWidth = that.imageWidth / 8
+        that.personHeight = that.imageHeight / 3
+        /* 绘制图片的起点 */
+        that.x0 = that.canvasWidth / 2 - that.personWidth / 2
+        that.y0 = that.canvasHeight / 2 - that.personHeight / 2
+        /* 默认绘制在中心位置 正面朝外 */
+        that.ctx.drawImage(image,0,0,that.personWidth,that.personHeight,that.x0,that.y0,that.personWidth,that.personHeight)
+        /* 通过方向键控制人物行走 */
+      })
+
+    }
+    /* 加载图片 */
+    Person.prototype.loadImage = function (callback) {
+      var image = new Image();
+      image.onload = function () {
+        callback && callback(image)
+      }
+      image.src = this.src
+    }
+    new Person();
+  </script>
+</body>
+
+</html>
