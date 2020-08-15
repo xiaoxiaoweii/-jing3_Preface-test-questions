@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 100px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <img src="images/01.jpg"> -->
+  <canvas width="600" height="400"></canvas>
+  <script>
+    const myCanvas = document.querySelector('canvas');
+    const ctx = myCanvas.getContext('2d')
+    /* 绘制图片的三种方式 */
+    /* 1.加载图片到内存即可 */
+    /* 方法1 创建img节点 */
+    /* var img = document.createElement('img');
+    img.src = 'images/01.jpg'  */
+    /* 方法2 创建img对象 */
+    var img = new Image();
+    img.onload = function() {
+      /* 实现图片绘制 */
+    }
+    img.src = 'images/01.jpg'
+    /* 必须等图片加载完毕 */
+    
+    console.log(img)
+  </script>
+</body>
+
+</html>
